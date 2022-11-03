@@ -1,0 +1,19 @@
+use std::sync::Mutex;
+
+struct A;
+
+impl Drop for A {
+    fn drop(&mut self) {
+        println!("A");
+    }
+}
+
+fn a() -> A {
+    A
+}
+
+fn main() {
+    let lock = Mutex::new(());
+    let _ = lock.lock().unwrap();
+    println!("hello");
+}

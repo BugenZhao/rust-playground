@@ -1,0 +1,582 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'rust-playground'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=rust-playground",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "rust-playground",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'rust-playground'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=rust-playground",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "rust-playground",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'arena_stack'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=arena_stack",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "arena_stack",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'arena_stack'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=arena_stack",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "arena_stack",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'local'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=local",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "local",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'local'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=local",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "local",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'row_trait'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=row_trait",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "row_trait",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'row_trait'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=row_trait",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "row_trait",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'cancel'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=cancel",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "cancel",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'cancel'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=cancel",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "cancel",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'generator_iterator'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=generator_iterator",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "generator_iterator",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'generator_iterator'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=generator_iterator",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "generator_iterator",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'local_state_store'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=local_state_store",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "local_state_store",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'local_state_store'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=local_state_store",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "local_state_store",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'ty_stack'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=ty_stack",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "ty_stack",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'ty_stack'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=ty_stack",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "ty_stack",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'lazy_stream'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=lazy_stream",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "lazy_stream",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'lazy_stream'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=lazy_stream",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "lazy_stream",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'future'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=future",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "future",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'future'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=future",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "future",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'track_caller'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=track_caller",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "track_caller",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'track_caller'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=track_caller",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "track_caller",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'arc'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=arc",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "arc",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'arc'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=arc",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "arc",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'lock'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=lock",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "lock",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'lock'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=lock",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "lock",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'stack'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=stack",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "stack",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'stack'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=stack",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "stack",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'map'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=map",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "map",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'map'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=map",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "map",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug benchmark 'discontinuous'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bench=discontinuous",
+                    "--package=rust-playground"
+                ],
+                "filter": {
+                    "name": "discontinuous",
+                    "kind": "bench"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}

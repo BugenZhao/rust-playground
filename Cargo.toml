@@ -1,0 +1,34 @@
+[package]
+name = "rust-playground"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+async-oncecell = "0.2.0"
+tokio = { version = "1.20", features = ["full"] }
+futures = "0.3"
+futures-async-stream = "0.2"
+pin-project-lite = "*"
+lazy_static = "*"
+pin-project = "*"
+itertools = "*"
+tracing = "*"
+indextree = "*"
+triomphe = "*"
+bytes = "*"
+criterion = { version = "*", features = ["async_tokio"] }
+tikv-jemallocator = "0.5"
+yield-iter = "*"
+rand = "*"
+
+[features]
+
+[[bench]]
+name = "discontinuous"
+harness = false
+
+[[bench]]
+name = "async_expr"
+harness = false
