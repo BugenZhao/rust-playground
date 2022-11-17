@@ -1,0 +1,39 @@
+use std::collections::HashMap;
+
+use easy_ext::ext;
+use partial_borrow::prelude::*;
+
+#[derive(PartialBorrow)]
+pub struct Entry {
+    map: HashMap<u32, String>,
+
+    degree: usize,
+}
+
+#[ext]
+impl partial!(Entry mut map) {
+    pub fn get_map_mut(&mut self, key: u32) -> Option<&mut String> {
+        self.map.get_mut(&key)
+    }
+}
+
+#[ext]
+impl partial!(Entry mut degree) {
+    pub fn inc_degree(&mut self) {
+        *self.degree += 1;
+    }
+}
+
+fn main() {
+    let mut entry = Entry {
+        map: HashMap::new(),
+        degree: 0,
+    };
+    entry.map.insert(2, "233".to_owned());
+
+    let e = entry.as_mut();
+
+    let value = e.get_map_mut(2).unwrap();
+    e.inc_degree();
+    println!("{} {}", value, entry.degree);
+}

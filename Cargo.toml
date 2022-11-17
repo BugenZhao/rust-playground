@@ -22,6 +22,8 @@ criterion = { version = "*", features = ["async_tokio"] }
 tikv-jemallocator = "0.5"
 yield-iter = "*"
 rand = "*"
+partial-borrow = "1.0.1"
+easy-ext = "1.0.1"
 
 [features]
 
@@ -31,4 +33,8 @@ harness = false
 
 [[bench]]
 name = "async_expr"
+harness = false
+
+[[bench]]
+name = "empty_iter"
 harness = false
