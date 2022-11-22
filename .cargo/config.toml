@@ -1,0 +1,11 @@
+
+# Flags for all targets.
+[target.'cfg(all())']
+rustflags = [
+    "--cfg",
+    "tokio_unstable",
+    # lints
+    "-Funused_must_use",
+    "-Adead_code",
+    "-Aunused_imports",
+]

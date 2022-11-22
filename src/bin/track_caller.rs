@@ -1,5 +1,3 @@
-#![feature(backtrace)]
-
 use std::{backtrace::Backtrace, panic::Location};
 
 #[track_caller]

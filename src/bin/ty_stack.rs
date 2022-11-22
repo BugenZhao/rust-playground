@@ -63,7 +63,7 @@ async fn main() {
 async fn outer() {
     let _guard = TRACE.with(|context| context.enter("outer"));
 
-    tokio::spawn(inner()).await;
+    tokio::spawn(inner()).await.unwrap();
 
     tokio::time::sleep(Duration::from_secs(2)).await;
 }
