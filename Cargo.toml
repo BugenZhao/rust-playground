@@ -24,6 +24,8 @@ yield-iter = "*"
 rand = "*"
 partial-borrow = "1.0.1"
 easy-ext = "1.0.1"
+maplit = "1.0.2"
+crepe = "0.1.7"
 
 [features]
 
