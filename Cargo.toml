@@ -27,6 +27,8 @@ easy-ext = "1.0.1"
 maplit = "1.0.2"
 crepe = "0.1.7"
 tracing-subscriber = "0.3.16"
+tracing-forest = "0.1.5"
+tracing-futures = { version = "0.2.5", features = ["futures-03"]}
 
 [features]
 
