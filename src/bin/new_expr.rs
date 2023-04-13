@@ -3,7 +3,7 @@ use std::ops::Add;
 use itertools::Either;
 
 #[derive(Clone)]
-struct Scalar;
+struct Scalar(i32);
 
 struct Array(Vec<Scalar>);
 
@@ -53,6 +53,14 @@ trait Expr {
 }
 
 type BoxedExpr = Box<dyn Expr>;
+
+struct ConstantExpr(Scalar);
+
+impl Expr for ConstantExpr {
+    fn eval_new(&self, _input: &Chunk) -> Value {
+        Value::Scalar(self.0.clone())
+    }
+}
 
 struct BinaryExpr {
     lhs: BoxedExpr,
