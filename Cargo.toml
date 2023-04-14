@@ -9,6 +9,7 @@ async-backtrace = "0.2.2"
 async-oncecell = "0.2.0"
 auto_enums = "0.8"
 bytes = "*"
+crc32fast = "1"
 crepe = "0.1.7"
 criterion = { version = "*", features = ["async_tokio"] }
 easy-ext = "1.0.1"
