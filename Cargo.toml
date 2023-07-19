@@ -18,6 +18,7 @@ easy-ext = "1.0.1"
 error-stack = "0.3.1"
 futures = "0.3"
 futures-async-stream = "0.2"
+hyper = { version = "0.14", features = ["full"] }
 indextree = "*"
 indicatif = { version = "0.17.3", features = ["tokio"] }
 itertools = "*"
@@ -27,16 +28,20 @@ maplit = "1.0.2"
 partial-borrow = "1.0.1"
 pin-project = "*"
 pin-project-lite = "*"
+powerset-enum = "0.1.0"
 quote = "1.0.23"
 rand = "*"
 rdkafka = "0.29.0"
 self_cell = "1.0.0"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
+serde_with = "3"
+subenum = "1.0.1"
 syn = "1.0.109"
 tempfile = "3.5.0"
 tikv-jemallocator = "0.5"
 tokio = { version = "1.20", features = ["full"] }
+tokio-postgres = "0.7.8"
 tracing = "*"
 tracing-forest = "0.1.5"
 tracing-futures = { version = "0.2.5", features = ["futures-03"] }
