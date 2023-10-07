@@ -143,7 +143,11 @@ mod traced {
 #[derive(Error, Debug)]
 enum HummockErrorInner {
     #[error("Magic number mismatch: expected {expected}, found: {found}.")]
-    MagicMismatch { expected: u32, found: u32, backtrace: std::backtrace::Backtrace },
+    MagicMismatch {
+        expected: u32,
+        found: u32,
+        backtrace: std::backtrace::Backtrace,
+    },
     #[error("Invalid format version: {0}.")]
     InvalidFormatVersion(u32),
 }

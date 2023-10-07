@@ -12,8 +12,10 @@ pub mod mcbean {
     impl Drop for StarOffMachine {
         fn drop(&mut self) {
             let contents = self.dollars.get();
-            println!("Dropping a machine; sending {} dollars to Sylvester.",
-                     contents);
+            println!(
+                "Dropping a machine; sending {} dollars to Sylvester.",
+                contents
+            );
             self.dollars.set(0);
             self.usable = false;
         }
@@ -21,11 +23,16 @@ pub mod mcbean {
 
     impl StarOffMachine {
         pub fn new() -> StarOffMachine {
-            StarOffMachine { usable: true, dollars: Cell::new(0) }
+            StarOffMachine {
+                usable: true,
+                dollars: Cell::new(0),
+            }
         }
         pub fn remove_star(&self, s: &mut Sneetch) {
-            assert!(self.usable,
-                    "No different than a read of a dangling pointer.");
+            assert!(
+                self.usable,
+                "No different than a read of a dangling pointer."
+            );
             self.dollars.set(self.dollars.get() + 10);
             s.has_star = false;
         }
@@ -42,7 +49,7 @@ pub mod mcbean {
             Sneetch {
                 name: name,
                 has_star: true,
-                machine: Cell::new(None)
+                machine: Cell::new(None),
             }
         }
 
@@ -55,8 +62,11 @@ pub mod mcbean {
     impl<'a> Drop for Sneetch<'a> {
         fn drop(&mut self) {
             if let Some(m) = self.machine.get() {
-                println!("{} says ``before I die, I want to join my \
-                          plain-bellied brethren.''", self.name);
+                println!(
+                    "{} says ``before I die, I want to join my \
+                          plain-bellied brethren.''",
+                    self.name
+                );
                 m.remove_star(self);
             }
         }

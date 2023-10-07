@@ -31,7 +31,6 @@ impl<R: Row> Row for DefaultOrdered<R> {}
 struct OwnedRow;
 struct ScalarImpl;
 
-
 type DefaultOrdOwnedRow = DefaultOrdered<OwnedRow>;
 type DefaultOrdScalarImpl = DefaultOrdered<ScalarImpl>;
 

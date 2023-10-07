@@ -24,9 +24,9 @@ async fn work() {
     let l = TcpListener::bind("0.0.0.0:10188").await.unwrap();
 
     let rt = tokio::runtime::Builder::new_multi_thread()
-    .enable_all()
-    .build()
-    .unwrap();
+        .enable_all()
+        .build()
+        .unwrap();
 
     loop {
         let mut r = l.accept().await.unwrap();

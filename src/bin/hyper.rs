@@ -1,8 +1,9 @@
 use std::convert::Infallible;
 
 use hyper::{
+    http::HeaderValue,
     service::{make_service_fn, service_fn},
-    Body, Request, Response, Server, http::HeaderValue,
+    Body, Request, Response, Server,
 };
 
 async fn handle(_req: Request<Body>) -> Result<Response<Body>, Infallible> {

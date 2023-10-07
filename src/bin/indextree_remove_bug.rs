@@ -12,7 +12,10 @@ fn main() {
 
         let new_id = tree.new_node(42);
         assert!(!new_id.is_removed(&tree));
-        assert!(id.is_removed(&tree), "i: {i}, id: {id:?}, new_id: {new_id:?}");
+        assert!(
+            id.is_removed(&tree),
+            "i: {i}, id: {id:?}, new_id: {new_id:?}"
+        );
 
         new_id.remove(&mut tree);
     }
