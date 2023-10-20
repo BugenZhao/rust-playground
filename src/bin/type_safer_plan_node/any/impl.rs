@@ -67,3 +67,5 @@ impl BatchSpecificAccess for PlanRef {
             .expect("accessing batch properties on non-batch plan node")
     }
 }
+
+impl AllAccess for PlanRef {}
