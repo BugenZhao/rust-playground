@@ -2,6 +2,9 @@
 
 use std::{any::Any, ops::Deref, rc::Rc};
 
+struct Distribution;
+struct Order;
+
 enum Convention {
     Logical,
     Batch,
@@ -46,7 +49,7 @@ trait LogicalAccess {
 }
 
 trait PhysicalSpecificAccess {
-    fn distribution(&self) -> bool;
+    fn distribution(&self) -> &Distribution;
 }
 trait PhysicalAccess = LogicalAccess + PhysicalSpecificAccess;
 
@@ -56,14 +59,14 @@ trait StreamSpecificAccess: PhysicalSpecificAccess {
 trait StreamAccess = PhysicalAccess + StreamSpecificAccess;
 
 trait BatchSpecificAccess: PhysicalSpecificAccess {
-    fn order(&self) -> bool;
+    fn order(&self) -> &Order;
 }
 trait BatchAccess = PhysicalAccess + BatchSpecificAccess;
 
 trait AnyAccess: StreamAccess + BatchAccess {}
 
 struct PhysicalExtra {
-    distribution: bool,
+    distribution: Distribution,
 }
 
 struct StreamExtra {
@@ -73,8 +76,8 @@ struct StreamExtra {
 
 // Delegate to the physical properties.
 impl PhysicalSpecificAccess for StreamExtra {
-    fn distribution(&self) -> bool {
-        self.physical.distribution
+    fn distribution(&self) -> &Distribution {
+        &self.physical.distribution
     }
 }
 
@@ -86,19 +89,19 @@ impl StreamSpecificAccess for StreamExtra {
 
 struct BatchExtra {
     physical: PhysicalExtra,
-    order: bool,
+    order: Order,
 }
 
 // Delegate to the physical properties.
 impl PhysicalSpecificAccess for BatchExtra {
-    fn distribution(&self) -> bool {
-        self.physical.distribution
+    fn distribution(&self) -> &Distribution {
+        &self.physical.distribution
     }
 }
 
 impl BatchSpecificAccess for BatchExtra {
-    fn order(&self) -> bool {
-        self.order
+    fn order(&self) -> &Order {
+        &self.order
     }
 }
 
@@ -125,7 +128,7 @@ impl<C: ConventionMarker> PhysicalSpecificAccess for Base<C>
 where
     C::Extra: PhysicalSpecificAccess,
 {
-    fn distribution(&self) -> bool {
+    fn distribution(&self) -> &Distribution {
         self.extra.distribution()
     }
 }
@@ -143,7 +146,7 @@ impl<C: ConventionMarker> BatchSpecificAccess for Base<C>
 where
     C::Extra: BatchSpecificAccess,
 {
-    fn order(&self) -> bool {
+    fn order(&self) -> &Order {
         self.extra.order()
     }
 }
@@ -168,7 +171,7 @@ where
     P: PlanNode,
     <P::Convention as ConventionMarker>::Extra: PhysicalSpecificAccess,
 {
-    fn distribution(&self) -> bool {
+    fn distribution(&self) -> &Distribution {
         self.base().distribution()
     }
 }
@@ -186,7 +189,7 @@ impl<P> BatchSpecificAccess for P
 where
     P: PlanNode<Convention = Batch>,
 {
-    fn order(&self) -> bool {
+    fn order(&self) -> &Order {
         self.base().order()
     }
 }
@@ -208,119 +211,117 @@ where
     }
 
     fn any_base(&self) -> AnyBaseRef<'_> {
-        Rc::new(AnyBase(PlanNode::base(self)))
+        Rc::new(AnyBaseAccessor(PlanNode::base(self)))
     }
 }
 
-struct AnyBase<'a, C: ConventionMarker>(&'a Base<C>);
+struct AnyBaseAccessor<'a, C: ConventionMarker>(&'a Base<C>);
 
-impl<C: ConventionMarker> LogicalAccess for AnyBase<'_, C> {
+impl<C: ConventionMarker> LogicalAccess for AnyBaseAccessor<'_, C> {
     fn id(&self) -> i32 {
         self.0.id()
     }
 }
 
-fn physical_any_access<C: ConventionMarker, R>(
-    base: &Base<C>,
-    f: impl FnOnce(&dyn PhysicalSpecificAccess) -> R,
-) -> R {
-    let extra = base.extra_as_any();
-
-    if let Some(e) = extra.downcast_ref::<BatchExtra>() {
-        f(e)
-    } else if let Some(e) = extra.downcast_ref::<StreamExtra>() {
-        f(e)
-    } else {
-        panic!("accessing physical properties on logical plan node")
+// TODO: lifetime issue if extracting this into a **function**
+macro_rules! access_by_downcast {
+    ($self:ident, $field:ident, $( $Extra:ident ),+) => {
+        loop {
+            $(
+                if let Some(e) = $self.0.extra_as_any().downcast_ref::<$Extra>() {
+                    break Some(e.$field());
+                }
+            )*;
+            #[allow(unreachable_code)]
+            break None;
+        }
     }
 }
 
-fn stream_any_access<C: ConventionMarker, R>(
-    base: &Base<C>,
-    f: impl FnOnce(&dyn StreamSpecificAccess) -> R,
-) -> R {
-    let extra = base.extra_as_any();
-
-    if let Some(e) = extra.downcast_ref::<StreamExtra>() {
-        f(e)
-    } else {
-        panic!("accessing stream properties on non-stream plan node")
+impl<C: ConventionMarker> PhysicalSpecificAccess for AnyBaseAccessor<'_, C> {
+    fn distribution(&self) -> &Distribution {
+        access_by_downcast!(self, distribution, StreamExtra, BatchExtra)
+            .expect("accessing physical properties on logical plan node")
     }
 }
-
-fn batch_any_access<C: ConventionMarker, R>(
-    base: &Base<C>,
-    f: impl FnOnce(&dyn BatchSpecificAccess) -> R,
-) -> R {
-    let extra = base.extra_as_any();
-
-    if let Some(e) = extra.downcast_ref::<BatchExtra>() {
-        f(e)
-    } else {
-        panic!("accessing batch properties on non-batch plan node")
-    }
-}
-
-impl<C: ConventionMarker> PhysicalSpecificAccess for AnyBase<'_, C> {
-    fn distribution(&self) -> bool {
-        physical_any_access(self.0, |e| e.distribution())
-    }
-}
-impl<C: ConventionMarker> StreamSpecificAccess for AnyBase<'_, C> {
+impl<C: ConventionMarker> StreamSpecificAccess for AnyBaseAccessor<'_, C> {
     fn append_only(&self) -> bool {
-        stream_any_access(self.0, |e| e.append_only())
+        access_by_downcast!(self, append_only, StreamExtra)
+            .expect("accessing stream properties on non-stream plan node")
     }
 }
-impl<C: ConventionMarker> BatchSpecificAccess for AnyBase<'_, C> {
-    fn order(&self) -> bool {
-        batch_any_access(self.0, |e| e.order())
+impl<C: ConventionMarker> BatchSpecificAccess for AnyBaseAccessor<'_, C> {
+    fn order(&self) -> &Order {
+        access_by_downcast!(self, order, BatchExtra)
+            .expect("accessing batch properties on non-batch plan node")
     }
 }
-impl<C: ConventionMarker> AnyAccess for AnyBase<'_, C> {}
+impl<C: ConventionMarker> AnyAccess for AnyBaseAccessor<'_, C> {}
 
 fn assert_access_object_safe(_: &dyn AnyAccess) {}
 fn assert_plan_node_object_safe(_: &dyn AnyPlanNode) {}
 
-struct PlanRef(Rc<dyn AnyPlanNode>);
+#[ouroboros::self_referencing]
+struct PlanRef {
+    plan: Rc<dyn AnyPlanNode>,
 
-impl PlanRef {
-    fn new<P>(plan: P) -> Self
-    where
-        P: AnyPlanNode,
-    {
-        Self(Rc::new(plan))
+    #[borrows(plan)]
+    #[covariant]
+    base: AnyBaseRef<'this>,
+}
+
+const _: &[u8; std::mem::size_of::<PlanRef>()] = &[0; 24];
+
+impl Clone for PlanRef {
+    fn clone(&self) -> Self {
+        Self::new_inner(Rc::clone(self.borrow_plan()))
     }
 }
 
-impl Deref for PlanRef {
-    type Target = dyn AnyPlanNode;
+impl PlanRef {
+    fn new_inner(plan: Rc<dyn AnyPlanNode>) -> Self {
+        Self::new(plan, |plan| plan.any_base())
+    }
 
-    fn deref(&self) -> &dyn AnyPlanNode {
-        &*self.0
+    fn make<P>(plan: P) -> Self
+    where
+        P: AnyPlanNode,
+    {
+        Self::new_inner(Rc::new(plan))
+    }
+}
+
+impl AnyPlanNode for PlanRef {
+    fn convention(&self) -> Convention {
+        self.borrow_plan().convention()
+    }
+
+    fn any_base(&self) -> AnyBaseRef<'_> {
+        Rc::clone(self.borrow_base())
     }
 }
 
 impl LogicalAccess for PlanRef {
     fn id(&self) -> i32 {
-        self.0.any_base().id()
+        self.borrow_base().id()
     }
 }
 
 impl PhysicalSpecificAccess for PlanRef {
-    fn distribution(&self) -> bool {
-        self.0.any_base().distribution()
+    fn distribution(&self) -> &Distribution {
+        self.borrow_base().distribution()
     }
 }
 
 impl StreamSpecificAccess for PlanRef {
     fn append_only(&self) -> bool {
-        self.0.any_base().append_only()
+        self.borrow_base().append_only()
     }
 }
 
 impl BatchSpecificAccess for PlanRef {
-    fn order(&self) -> bool {
-        self.0.any_base().order()
+    fn order(&self) -> &Order {
+        self.borrow_base().order()
     }
 }
 
@@ -363,7 +364,7 @@ fn main() {
                     id: 0,
                     extra: StreamExtra {
                         physical: PhysicalExtra {
-                            distribution: false,
+                            distribution: Distribution,
                         },
                         append_only: false,
                     },
@@ -412,7 +413,7 @@ fn main() {
     }
 
     // -- Type-erased plan node: with runtime convention check
-    let sf_any = PlanRef::new(sf);
+    let sf_any = PlanRef::make(sf);
 
     sf_any.id(); // through `LogicalAccess` on `AnyBase` then `LogicalAccess` on `Base<Stream>`
     sf_any.append_only(); // through `StreamSpecificAccess` on `AnyBase` then `StreamSpecificAccess` on `Base<Stream>`
@@ -421,6 +422,6 @@ fn main() {
     // Compiles, but panics at runtime
     {
         sf_any.order(); // `AnyBase` is not `BatchAccess`
-        sf_any.any_base().order(); // same as above, just de-delegating
+        sf_any.any_base().order(); // same as above, just desugared
     }
 }
