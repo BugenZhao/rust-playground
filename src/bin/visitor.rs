@@ -19,7 +19,12 @@ mod visitor1 {
     use super::*;
 
     pub(super) trait Visitor {
-        fn visit_expression(&mut self, _expression: &Expression) {}
+        fn visit_expression(&mut self, expression: &Expression) {
+            match expression {
+                Expression::InputRef(input_ref) => self.visit_input_ref(input_ref),
+                Expression::FunctionCall(function_call) => self.visit_function_call(function_call),
+            }
+        }
 
         fn visit_function_call(&mut self, function_call: &FunctionCall) {
             for input in &function_call.inputs {
@@ -108,4 +113,55 @@ fn visit2(expr: &Expression) -> usize {
     visitor.count
 }
 
-fn main() {}
+fn visit2_customize_accept(expr: &Expression) -> usize {
+    use visitor2::Visit;
+
+    trait MyAccept {
+        fn my_accept(&self, visitor: &mut dyn Visit);
+    }
+
+    impl MyAccept for Expression {
+        fn my_accept(&self, visitor: &mut dyn Visit) {
+            match self {
+                Expression::InputRef(input_ref) => input_ref.my_accept(visitor),
+                Expression::FunctionCall(function_call) => function_call.my_accept(visitor),
+            }
+
+            visitor.visit_expression(self);
+        }
+    }
+
+    impl MyAccept for FunctionCall {
+        fn my_accept(&self, visitor: &mut dyn Visit) {
+            for input in &self.inputs {
+                input.my_accept(visitor);
+            }
+
+            visitor.visit_function_call(self);
+        }
+    }
+
+    impl MyAccept for InputRef {
+        fn my_accept(&self, visitor: &mut dyn Visit) {
+            visitor.visit_input_ref(self);
+        }
+    }
+
+    let mut visitor = CountFunctionCall::default();
+    expr.my_accept(&mut visitor);
+    visitor.count
+}
+
+fn main() {
+    let expression = Expression::FunctionCall(FunctionCall {
+        inputs: vec![Expression::FunctionCall(FunctionCall {
+            inputs: vec![Expression::InputRef(InputRef)],
+            ty: FunctionCallType,
+        })],
+        ty: FunctionCallType,
+    });
+
+    assert_eq!(visit1(&expression), 2);
+    assert_eq!(visit2(&expression), 2);
+    assert_eq!(visit2_customize_accept(&expression), 2);
+}
