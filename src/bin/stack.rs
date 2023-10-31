@@ -1,5 +1,5 @@
 #![feature(map_try_insert)]
-#![feature(generators)]
+#![feature(coroutines)]
 #![allow(clippy::declare_interior_mutable_const)]
 
 fn main() {}

@@ -28,12 +28,11 @@ fn parse_config(path: impl AsRef<Path>) -> error_stack::Result<Config, ParseConf
     let path = path.as_ref();
 
     let file = std::fs::File::open(path)
-        .into_report()
+        // implicitly created a `Report` from an error, then attach
         .attach_printable_lazy(|| format!("failed to open file: `{}`", path.display()))
         .attach(Suggestion("please check the path"))
         .change_context(ParseConfigError)?;
     let config = serde_json::from_reader(file)
-        .into_report()
         .attach(Suggestion("please check the file content"))
         .change_context(ParseConfigError)?;
 

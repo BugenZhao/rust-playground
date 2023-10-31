@@ -106,9 +106,9 @@ dependencies = [
 
 [[package]]
 name = "anyhow"
-version = "1.0.71"
+version = "1.0.75"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9c7d0618f0e0b7e8ff11427422b64564d5fb0be1940354bfe2e0529b18a9d9b8"
+checksum = "a4668cab20f66d8d020e1fbc0ebe47217433c1b6c8f2040faf858554e394ace6"
 
 [[package]]
 name = "async-backtrace"
@@ -626,12 +626,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "doc-comment"
-version = "0.3.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fea41bba32d969b513997752735605054bc0dfa92b4c56bf1189f2e174be7a10"
-
-[[package]]
 name = "easy-ext"
 version = "1.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -684,9 +678,9 @@ dependencies = [
 
 [[package]]
 name = "error-stack"
-version = "0.3.1"
+version = "0.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5f00447f331c7f726db5b8532ebc9163519eed03c6d7c8b73c90b3ff5646ac85"
+checksum = "27a72baa257b5e0e2de241967bc5ee8f855d6072351042688621081d66b2a76b"
 dependencies = [
  "anyhow",
  "rustc_version",
@@ -774,9 +768,9 @@ dependencies = [
 
 [[package]]
 name = "futures-async-stream"
-version = "0.2.6"
+version = "0.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "78501ea1cd42fff5ac783fa99765af9179a782dcfb62af50bae7a8ac4154df69"
+checksum = "379790776b0d953337df4ab7ecc51936c66ea112484cad7912907b1d34253ebf"
 dependencies = [
  "futures-async-stream-macro",
  "futures-core",
@@ -785,13 +779,13 @@ dependencies = [
 
 [[package]]
 name = "futures-async-stream-macro"
-version = "0.2.6"
+version = "0.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fb6646d5c7b236481975efca1f025165b1eeec61fa4abf27842825121e9abf19"
+checksum = "5df2c13d48c8cb8a3ec093ede6f0f4482f327d7bb781120c5fb483ef0f17e758"
 dependencies = [
  "proc-macro2 1.0.66",
  "quote 1.0.32",
- "syn 1.0.109",
+ "syn 2.0.28",
 ]
 
 [[package]]
@@ -1968,7 +1962,6 @@ dependencies = [
  "serde_json",
  "serde_with",
  "simd-json",
- "snafu",
  "subenum",
  "syn 1.0.109",
  "tempfile",
@@ -1981,7 +1974,6 @@ dependencies = [
  "tracing-futures",
  "tracing-subscriber",
  "triomphe",
- "yield-iter",
 ]
 
 [[package]]
@@ -2194,28 +2186,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a507befe795404456341dfab10cef66ead4c041f62b8b11bbb92bffe5d0953e0"
 
 [[package]]
-name = "snafu"
-version = "0.7.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e4de37ad025c587a29e8f3f5605c00f70b98715ef90b9061a815b9e59e9042d6"
-dependencies = [
- "doc-comment",
- "snafu-derive",
-]
-
-[[package]]
-name = "snafu-derive"
-version = "0.7.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "990079665f075b699031e9c08fd3ab99be5029b96f3b78dc0709e8f77e4efebf"
-dependencies = [
- "heck",
- "proc-macro2 1.0.66",
- "quote 1.0.32",
- "syn 1.0.109",
-]
-
-[[package]]
 name = "socket2"
 version = "0.4.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2335,18 +2305,18 @@ checksum = "222a222a5bfe1bba4a77b45ec488a741b3cb8872e5e499451fd7d0129c9c7c3d"
 
 [[package]]
 name = "thiserror"
-version = "1.0.44"
+version = "1.0.50"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "611040a08a0439f8248d1990b111c95baa9c704c805fa1f62104b39655fd7f90"
+checksum = "f9a7210f5c9a7156bb50aa36aed4c95afb51df0df00713949448cf9e97d382d2"
 dependencies = [
  "thiserror-impl",
 ]
 
 [[package]]
 name = "thiserror-impl"
-version = "1.0.44"
+version = "1.0.50"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "090198534930841fab3a5d1bb637cde49e339654e606195f8d9c76eeb081dc96"
+checksum = "266b2e40bc00e5a6c09c3584011e08b06f123c00362c92b975ba9843aaaa14b8"
 dependencies = [
  "proc-macro2 1.0.66",
  "quote 1.0.32",
@@ -2998,9 +2968,3 @@ checksum = "deac0939bd6e4f24ab5919fbf751c97a8cfc8543bb083a305ed5c0c10bb241d1"
 dependencies = [
  "memchr",
 ]
-
-[[package]]
-name = "yield-iter"
-version = "0.2.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d4921e4df6208ff5de4544bfad6cec57766ce64994ba8215def7ddc3aec71f9a"

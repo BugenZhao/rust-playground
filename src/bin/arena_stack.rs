@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#![feature(generators)]
+#![feature(coroutines)]
 #![feature(map_try_insert)]
 #![feature(lint_reasons)]
 // FIXME: This is a false-positive clippy test, remove this while bumping toolchain.

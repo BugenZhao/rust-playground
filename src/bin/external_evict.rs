@@ -1,4 +1,4 @@
-#![feature(generators)]
+#![feature(coroutines)]
 #![feature(stmt_expr_attributes)]
 #![feature(proc_macro_hygiene)]
 

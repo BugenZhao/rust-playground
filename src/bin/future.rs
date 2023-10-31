@@ -1,4 +1,4 @@
-#![feature(generators)]
+#![feature(coroutines)]
 
 use std::pin::Pin;
 use std::task::Context;

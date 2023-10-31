@@ -1,5 +1,3 @@
-#![feature(pin_macro)]
-
 use std::{marker::PhantomPinned, pin::Pin};
 
 use futures::{future::FusedFuture, Future, FutureExt};

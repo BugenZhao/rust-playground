@@ -1,4 +1,4 @@
-#![feature(generators)]
+#![feature(coroutines)]
 
 use std::sync::atomic::{AtomicBool, Ordering};
 

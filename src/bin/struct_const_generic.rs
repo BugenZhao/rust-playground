@@ -1,7 +1,7 @@
 #![allow(incomplete_features)]
 #![feature(adt_const_params)]
 
-#[derive(PartialEq, Eq)]
+#[derive(std::marker::ConstParamTy, PartialEq, Eq)]
 struct Config {
     name: &'static str,
     version: &'static str,

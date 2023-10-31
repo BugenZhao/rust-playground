@@ -1,16 +1,15 @@
-#![feature(generators)]
-
-use yield_iter::generator;
+#![feature(coroutines)]
+#![feature(iter_from_coroutine)]
 
 struct MyArray(Vec<u8>);
 
 impl MyArray {
     fn iter(&self) -> impl Iterator<Item = u8> + '_ {
-        generator! {
+        std::iter::from_coroutine(|| {
             for &x in &self.0 {
                 yield x;
             }
-        }
+        })
     }
 }
 

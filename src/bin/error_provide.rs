@@ -1,5 +1,4 @@
 #![feature(error_generic_member_access)]
-#![feature(provide_any)]
 #![feature(error_iter)]
 #![feature(type_name_of_val)]
 
@@ -7,7 +6,10 @@ use thiserror::Error;
 use traced::Traced;
 
 mod traced {
-    use std::backtrace::{Backtrace, BacktraceStatus};
+    use std::{
+        backtrace::{Backtrace, BacktraceStatus},
+        error::{request_ref, Request},
+    };
     use thiserror::Error;
 
     struct Inner<E> {
@@ -21,7 +23,7 @@ mod traced {
     {
         #[track_caller]
         fn new(error: E) -> Self {
-            let requested = (&error as &dyn std::error::Error).request_ref::<Backtrace>();
+            let requested = request_ref::<Backtrace>(&error);
 
             let backtrace = if requested.is_some() {
                 Backtrace::disabled()
@@ -46,11 +48,11 @@ mod traced {
             E::source(&self.error)
         }
 
-        fn provide<'a>(&'a self, demand: &mut std::any::Demand<'a>) {
+        fn provide<'a>(&'a self, request: &mut std::error::Request<'a>) {
             if let BacktraceStatus::Captured = self.backtrace.status() {
-                demand.provide_ref::<Backtrace>(&self.backtrace);
+                request.provide_ref::<Backtrace>(&self.backtrace);
             }
-            E::provide(&self.error, demand);
+            E::provide(&self.error, request);
         }
     }
 
@@ -87,7 +89,7 @@ mod traced {
                 }
             }
 
-            if let Some(backtrace) = (self as &dyn std::error::Error).request_ref::<Backtrace>() {
+            if let Some(backtrace) = request_ref::<Backtrace>(self) {
                 writeln!(f, "\n\nStack Backtrace:\n{}", backtrace)?;
             }
 
@@ -116,8 +118,8 @@ mod traced {
             Inner::source(&*self.0)
         }
 
-        fn provide<'a>(&'a self, demand: &mut std::any::Demand<'a>) {
-            Inner::provide(&*self.0, demand)
+        fn provide<'a>(&'a self, request: &mut std::error::Request<'a>) {
+            Inner::provide(&*self.0, request)
         }
     }
 
@@ -152,7 +154,7 @@ enum HummockErrorInner {
     InvalidFormatVersion(u32),
 }
 
-pub type HummockError = Traced<HummockErrorInner>;
+pub(crate) type HummockError = Traced<HummockErrorInner>;
 
 #[derive(Error, Debug)]
 enum StreamErrorInner {

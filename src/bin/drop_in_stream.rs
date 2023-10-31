@@ -1,4 +1,4 @@
-#![feature(generators)]
+#![feature(coroutines)]
 
 use std::{marker::PhantomData, pin::Pin};
 
