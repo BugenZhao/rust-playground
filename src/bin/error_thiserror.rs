@@ -197,43 +197,8 @@ mod my_box {
     }
 }
 
-// Port from `snafu`
-mod context {
-    pub trait IntoError<E>
-    where
-        E: std::error::Error,
-    {
-        /// The underlying error
-        type Source;
-
-        /// Combine the information to produce the error
-        fn into_error(self, source: Self::Source) -> E;
-    }
-
-    #[easy_ext::ext(ResultExt)]
-    pub impl<T, E> Result<T, E> {
-        fn context<C, E2>(self, context: C) -> Result<T, E2>
-        where
-            C: IntoError<E2, Source = E>,
-            E2: std::error::Error,
-        {
-            self.map_err(|error| context.into_error(error))
-        }
-
-        fn with_context<C, E2, F>(self, context: F) -> Result<T, E2>
-        where
-            C: IntoError<E2, Source = E>,
-            E2: std::error::Error,
-            F: FnOnce() -> C,
-        {
-            self.map_err(|error| context().into_error(error))
-        }
-    }
-}
-
 // Followings are the use cases.
 
-use context::*;
 use std::backtrace::Backtrace;
 
 #[derive(thiserror::Error, Debug)]
@@ -276,27 +241,6 @@ pub enum MyErrorInner {
     ),
 }
 
-// For better construction of `MyErrorInner::Parse`.
-// Manually implement the `XxxSnafu`-like structs. This might be verbose.
-struct ParseContext<F> {
-    from: F,
-}
-
-impl<F> IntoError<MyError> for ParseContext<F>
-where
-    F: Into<String>,
-{
-    type Source = std::num::ParseIntError;
-
-    fn into_error(self, source: Self::Source) -> MyError {
-        MyErrorInner::Parse {
-            error: source,
-            from: self.from.into(),
-        }
-        .into()
-    }
-}
-
 #[derive(thiserror::Error, Debug)]
 #[error(transparent)]
 pub struct MyError(
@@ -318,6 +262,19 @@ where
     }
 }
 
+#[easy_ext::ext(ParseResultExt)]
+impl<T> Result<T, std::num::ParseIntError> {
+    pub fn context(self, from: impl Into<String>) -> Result<T, MyError> {
+        self.map_err(|error| {
+            MyErrorInner::Parse {
+                error,
+                from: from.into(),
+            }
+            .into()
+        })
+    }
+}
+
 async fn work() -> Result<(), MyError> {
     hyper::client::Client::new()
         .get(hyper::Uri::from_static("http://not-exist"))
@@ -328,7 +285,7 @@ async fn work() -> Result<(), MyError> {
 
 async fn work_2() -> Result<(), MyError> {
     let from = "not a number";
-    let _ = from.parse::<i32>().context(ParseContext { from })?;
+    let _ = from.parse::<i32>().context(from)?;
     Ok(())
 }
 
