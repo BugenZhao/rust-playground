@@ -224,6 +224,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "borrowme"
+version = "0.0.14"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bed1a3c817fe3ffa6ee9e3d9e249ea031994a67547dc7ab5f7eea17f45d203a0"
+dependencies = [
+ "borrowme-macros",
+]
+
+[[package]]
+name = "borrowme-macros"
+version = "0.0.14"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e19afdeb198dbf0fc220bcc4c14b58561219031e585c9d38022ec7d9f366a3f8"
+dependencies = [
+ "proc-macro2 1.0.66",
+ "quote 1.0.32",
+ "syn 2.0.28",
+]
+
+[[package]]
 name = "bumpalo"
 version = "3.12.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -623,6 +643,16 @@ dependencies = [
  "block-buffer",
  "crypto-common",
  "subtle",
+]
+
+[[package]]
+name = "diplomatic-bag"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3f6865d98daf3118a9a6cc4a75e273967c848713757d9199bb8df3945bda6f05"
+dependencies = [
+ "crossbeam-channel",
+ "once_cell",
 ]
 
 [[package]]
@@ -1929,12 +1959,14 @@ dependencies = [
  "async-backtrace",
  "async-oncecell",
  "auto_enums",
+ "borrowme",
  "bytes",
  "clap 4.3.0",
  "crc32fast",
  "crepe",
  "criterion",
  "ctor",
+ "diplomatic-bag",
  "easy-ext",
  "enum-as-inner",
  "error-stack",
