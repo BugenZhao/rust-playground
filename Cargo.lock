@@ -2088,6 +2088,7 @@ dependencies = [
  "syn 1.0.109",
  "tempfile",
  "thiserror",
+ "thiserror-ext",
  "tikv-jemallocator",
  "tokio",
  "tokio-postgres",
@@ -2432,6 +2433,28 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f9a7210f5c9a7156bb50aa36aed4c95afb51df0df00713949448cf9e97d382d2"
 dependencies = [
  "thiserror-impl",
+]
+
+[[package]]
+name = "thiserror-ext"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "368fdd73eb5f0df62797d1a5d1dca41ca4137a62f250980787ffe33e530b5d8b"
+dependencies = [
+ "thiserror",
+ "thiserror-ext-derive",
+]
+
+[[package]]
+name = "thiserror-ext-derive"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "efc1991800eaf856df8d097c909b487fdee13db47ffa293136c91cde6de4abee"
+dependencies = [
+ "either",
+ "proc-macro2 1.0.66",
+ "quote 1.0.32",
+ "syn 2.0.28",
 ]
 
 [[package]]
