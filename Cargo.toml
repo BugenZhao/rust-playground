@@ -32,6 +32,7 @@ libc = "0.2.140"
 maplit = "1.0.2"
 ouroboros = "0.18.0"
 partial-borrow = "1.0.1"
+paste = "1.0.14"
 pin-project = "*"
 pin-project-lite = "*"
 powerset-enum = "0.1.0"
@@ -59,6 +60,7 @@ tracing-forest = "0.1.5"
 tracing-futures = { version = "0.2.5", features = ["futures-03"] }
 tracing-subscriber = "0.3.16"
 triomphe = "*"
+wasmtime = "17.0.0"
 
 [features]
 
