@@ -26,6 +26,7 @@ futures-async-stream = "0.2"
 hyper = { version = "0.14", features = ["full"] }
 indextree = "*"
 indicatif = { version = "0.17.3", features = ["tokio"] }
+inventory = "0.3.15"
 itertools = "*"
 lazy_static = "*"
 libc = "0.2.140"

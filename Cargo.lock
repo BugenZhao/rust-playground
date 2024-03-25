@@ -1408,6 +1408,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "inventory"
+version = "0.3.15"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f958d3d68f4167080a18141e10381e7634563984a537f2a49a30fd8e53ac5767"
+
+[[package]]
 name = "io-lifetimes"
 version = "1.0.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2447,6 +2453,7 @@ dependencies = [
  "hyper",
  "indextree",
  "indicatif",
+ "inventory",
  "itertools 0.11.0",
  "lazy_static",
  "libc",

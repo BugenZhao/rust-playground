@@ -11,10 +11,11 @@ use thiserror_ext::AsReport;
 ///
 /// Unlike [`anyhow::Error`], the newtype **CANNOT** be converted from any error
 /// types implicitly. Instead, it can only be converted from [`anyhow::Error`]
-/// by default. Users are encouraged to...
+/// by default.
 ///
-/// - Either use [`anyhow::Context`] to attach detailed information to the
-///   source error before converting it to the newtype.
+/// - Users are encouraged to use [`anyhow::Context`] to attach detailed
+///   information to the source error and make it an [`anyhow::Error`] before
+///   converting it to the newtype.
 ///
 /// - Or specify the default context for each source error type in this macro
 ///   as shown in the example below, which will enable the implicit conversion
@@ -69,7 +70,7 @@ use thiserror_ext::AsReport;
 ///     `Other` variant.
 ///
 ///     By doing type erasure with `anyhow`, we're making it clear that the
-///     error is not actionable.
+///     error is not actionable so such confusion is avoided.
 #[macro_export]
 macro_rules! def_anyhow_newtype {
     (
@@ -117,5 +118,10 @@ fn main() {
     let e2: MyError = "foo".parse::<i32>().unwrap_err().into();
 
     let o = OuterError::Inner(e2);
+
+
+    anyhow!("233")
+    .as_report();
+
     println!("{}", o.as_report());
 }
