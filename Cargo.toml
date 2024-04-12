@@ -45,11 +45,13 @@ quote = "1.0.23"
 rand = "*"
 rdkafka = "0.29.0"
 readonly = "0.2.11"
+rusty-fork = "0.3.0"
 self_cell = "1.0.0"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 serde_with = "3"
 simd-json = "0.10.5"
+stacker = "0.1.15"
 # snafu = { version = "0.7.5", features = ["unstable-provider-api", "rust_1_61", "backtraces-impl-std"]}
 subenum = "1.0.1"
 syn = "1.0.109"
@@ -59,6 +61,7 @@ thiserror-ext = "0.1"
 tikv-jemallocator = "0.5"
 tokio = { version = "1.20", features = ["full"] }
 tokio-postgres = "0.7.8"
+tonic = "0.11.0"
 tracing = "*"
 tracing-forest = "0.1.5"
 tracing-futures = { version = "0.2.5", features = ["futures-03"] }

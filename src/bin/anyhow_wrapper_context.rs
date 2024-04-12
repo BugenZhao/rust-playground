@@ -119,9 +119,7 @@ fn main() {
 
     let o = OuterError::Inner(e2);
 
-
-    anyhow!("233")
-    .as_report();
+    anyhow!("233").as_report();
 
     println!("{}", o.as_report());
 }
