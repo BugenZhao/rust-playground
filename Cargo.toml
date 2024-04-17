@@ -22,8 +22,10 @@ diplomatic-bag = "0.3.1"
 easy-ext = "1.0.1"
 enum-as-inner = "0.6.0"
 error-stack = "0.4.1"
+fd-lock = "4"
 futures = "0.3"
 futures-async-stream = "0.2"
+governor = "0.6.3"
 hyper = { version = "0.14", features = ["full"] }
 indextree = "*"
 indicatif = { version = "0.17.3", features = ["tokio"] }
