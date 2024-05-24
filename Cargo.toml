@@ -33,6 +33,7 @@ inventory = "0.3.15"
 itertools = "*"
 lazy_static = "*"
 libc = "0.2.140"
+linkme = "0.3.26"
 maplit = "1.0.2"
 maybe-async = { version = "0.2.10", features = ["is_sync"] }
 ouroboros = "0.18.0"
@@ -58,6 +59,7 @@ stacker = "0.1.15"
 subenum = "1.0.1"
 syn = "1.0.109"
 tempfile = "3.5.0"
+testcontainers = "0.15.0"
 thiserror = "1.0.44"
 thiserror-ext = "0.1"
 tikv-jemallocator = "0.5"
@@ -70,6 +72,7 @@ tracing-futures = { version = "0.2.5", features = ["futures-03"] }
 tracing-subscriber = "0.3.16"
 triomphe = "*"
 wasmtime = "17.0.0"
+winnow = "0.6.8"
 
 [features]
 
@@ -84,3 +87,6 @@ harness = false
 [[bench]]
 name = "empty_iter"
 harness = false
+
+[dev-dependencies]
+expect-test = "1.5.0"
