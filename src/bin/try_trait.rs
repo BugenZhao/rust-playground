@@ -29,22 +29,19 @@ impl Plan {
     }
 }
 
+/// Result when applying an optimization rule.
 enum OResult<T> {
+    /// Successfully optimized the input.
     Ok(T),
+    /// The current rule is not applicable to the input.
+    /// The caller may try other rules.
     NotApplicable,
+    /// There was an unrecoverable error while applying the rule.
+    /// The caller should stop trying other rules and report the error.
     Err(Error),
 }
 
-impl<T> FromResidual<OResult<Infallible>> for OResult<T> {
-    fn from_residual(residual: OResult<Infallible>) -> Self {
-        match residual {
-            OResult::Ok(_) => unreachable!(),
-            OResult::NotApplicable => Self::NotApplicable,
-            OResult::Err(e) => Self::Err(e),
-        }
-    }
-}
-
+/// `?` on an `Option<_>`.
 impl<T> FromResidual<Option<Infallible>> for OResult<T> {
     fn from_residual(residual: Option<Infallible>) -> Self {
         match residual {
@@ -54,11 +51,22 @@ impl<T> FromResidual<Option<Infallible>> for OResult<T> {
     }
 }
 
+/// `?` on a `Result<_, Error>`.
 impl<T> FromResidual<Result<Infallible, Error>> for OResult<T> {
     fn from_residual(residual: Result<Infallible, Error>) -> Self {
         match residual {
             Ok(_) => unreachable!(),
             Err(e) => Self::Err(e),
+        }
+    }
+}
+
+impl<T> FromResidual<OResult<Infallible>> for OResult<T> {
+    fn from_residual(residual: OResult<Infallible>) -> Self {
+        match residual {
+            OResult::Ok(_) => unreachable!(),
+            OResult::NotApplicable => Self::NotApplicable,
+            OResult::Err(e) => Self::Err(e),
         }
     }
 }
