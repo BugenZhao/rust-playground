@@ -22,6 +22,7 @@ impl Project {
     }
 }
 
+#[derive(Clone)]
 struct Plan;
 impl Plan {
     fn as_project(&self) -> Option<&Project> {
@@ -61,7 +62,9 @@ impl<T> FromResidual<Result<Infallible, Error>> for OResult<T> {
     }
 }
 
-impl<T> FromResidual<OResult<Infallible>> for OResult<T> {
+// -- Only if we need to apply `?` on `OResult`, we need following impls --
+
+impl<T> FromResidual for OResult<T> {
     fn from_residual(residual: OResult<Infallible>) -> Self {
         match residual {
             OResult::Ok(_) => unreachable!(),
@@ -89,7 +92,9 @@ impl<T> Try for OResult<T> {
     }
 }
 
-fn optimize(plan: Plan) -> OResult<Plan> {
+// -- Over --
+
+fn apply(plan: Plan) -> OResult<Plan> {
     use OResult::*;
 
     // If the plan is not a project, return `NotApplicable`.
@@ -111,6 +116,24 @@ fn optimize(plan: Plan) -> OResult<Plan> {
     }
 
     /* do transformations */
+
+    Ok(plan)
+}
+
+fn multiple_optimize(plan: Plan) -> OResult<Plan> {
+    use OResult::*;
+
+    let rules = [apply, apply, apply];
+
+    let mut plan = plan;
+
+    for rule in rules {
+        match rule(plan.clone()) {
+            Ok(new_plan) => plan = new_plan,
+            NotApplicable => continue,
+            Err(error) => return Err(error),
+        }
+    }
 
     Ok(plan)
 }
