@@ -37,6 +37,7 @@ libc = "0.2.140"
 linkme = "0.3.26"
 maplit = "1.0.2"
 maybe-async = { version = "0.2.10", features = ["is_sync"] }
+moka = { version = "0.12.8", features = ["sync"] }
 ouroboros = "0.18.0"
 partial-borrow = "1.0.1"
 paste = "1.0.14"
