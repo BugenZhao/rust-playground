@@ -5,11 +5,14 @@ struct MyArray(Vec<u8>);
 
 impl MyArray {
     fn iter(&self) -> impl Iterator<Item = u8> + '_ {
-        std::iter::from_coroutine(|| {
-            for &x in &self.0 {
-                yield x;
-            }
-        })
+        std::iter::from_coroutine(
+            #[coroutine]
+            || {
+                for &x in &self.0 {
+                    yield x;
+                }
+            },
+        )
     }
 }
 
