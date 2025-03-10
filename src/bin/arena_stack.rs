@@ -14,7 +14,6 @@
 
 #![feature(coroutines)]
 #![feature(map_try_insert)]
-#![feature(lint_reasons)]
 // FIXME: This is a false-positive clippy test, remove this while bumping toolchain.
 // https://github.com/tokio-rs/tokio/issues/4836
 // https://github.com/rust-lang/rust-clippy/issues/8493

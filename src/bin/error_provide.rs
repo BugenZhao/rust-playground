@@ -1,6 +1,5 @@
 #![feature(error_generic_member_access)]
 #![feature(error_iter)]
-#![feature(type_name_of_val)]
 
 use thiserror::Error;
 use traced::Traced;

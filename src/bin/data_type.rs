@@ -1,19 +1,19 @@
 #![feature(exhaustive_patterns)]
 
-struct Annotated<E> {
+struct Outer<E> {
     extra: E,
-    variant: Variant<E>,
+    variant: Inner<E>,
 }
 
-enum Variant<E> {
+enum Inner<E> {
     Number,
     String,
-    List(Box<Variant<E>>),
+    List(Box<Inner<E>>),
     Struct(StructType<E>),
 }
 
 struct StructType<E> {
-    fields: Box<[Annotated<E>]>,
+    fields: Box<[Outer<E>]>,
 }
 
 struct WithFieldName {
@@ -26,13 +26,13 @@ struct WithIdName {
 }
 
 // 1.
-type DataType = Variant<WithFieldName>;
+type DataType = Inner<WithFieldName>;
 // 2.
-type Field = Annotated<WithFieldName>;
+type Field = Outer<WithFieldName>;
 
 // 3.
 struct ColumnDesc {
-    inner: Annotated<WithIdName>,
+    inner: Outer<WithIdName>,
 
     // top level fields...
     default_expr: (),
