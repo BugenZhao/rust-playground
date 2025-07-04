@@ -133,12 +133,12 @@ where
     }
 
     // Unique sinks
-    let sink1 = (0..n)
-        .find(|&u| g1.out_deg(u) == 0)
-        .expect("G1 missing sink");
-    let sink2 = (0..n)
-        .find(|&v| g2.out_deg(v) == 0)
-        .expect("G2 missing sink");
+    // let sink1 = (0..n)
+    //     .find(|&u| g1.out_deg(u) == 0)
+    //     .expect("G1 missing sink");
+    // let sink2 = (0..n)
+    //     .find(|&v| g2.out_deg(v) == 0)
+    //     .expect("G2 missing sink");
 
     // Fingerprints → buckets (kinds already inside fp)
     let fp1 = fingerprints(g1);
@@ -243,11 +243,14 @@ where
     }
 
     // initial mapping: sink1 → sink2 (must satisfy f too)
-    if !f(&g1.nodes[sink1], &g2.nodes[sink2]) {
-        return false;
-    }
-    let mut used_v = HashSet::from([sink2]);
-    let mut mapping = HashMap::from([(sink1, sink2)]);
+    // if !f(&g1.nodes[sink1], &g2.nodes[sink2]) {
+    //     return false;
+    // }
+    // let mut used_v = HashSet::from([sink2]);
+    // let mut mapping = HashMap::from([(sink1, sink2)]);
+
+    let mut used_v = HashSet::new();
+    let mut mapping = HashMap::new();
 
     let success = dfs(g1, g2, &mut cand, &mut used_v, &mut mapping);
     if success {
