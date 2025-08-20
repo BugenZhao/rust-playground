@@ -54,6 +54,7 @@ rdkafka = "0.29.0"
 readonly = "0.2.11"
 ring = "0.17.8"
 rusty-fork = "0.3.0"
+schemars = "1.0.3"
 self_cell = "1.0.0"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
@@ -77,6 +78,7 @@ tracing-forest = "0.1.5"
 tracing-futures = { version = "0.2.5", features = ["futures-03"] }
 tracing-subscriber = "0.3.16"
 triomphe = "*"
+typify = "0.4.2"
 wasmtime = "17.0.0"
 winnow = "0.6.8"
 zerocopy = { version = "0.8", features = ["derive", "std"] }
